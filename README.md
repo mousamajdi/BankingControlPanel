@@ -80,6 +80,10 @@ The application uses JWT (JSON Web Token) for authentication. You need to update
 
 ## **Step 5: Running the Application**
 
+1. When run the project you have to login first with user have **Admin** role to be able to use the Clients API's, otherwise you can login as normal user with role **User** that dont have privilege to access clients endpoints.
+
+2. you can register new users without having the **Admin role** or even before you login to the system 
+
 ## **Testing with Swagger**
 
 The project comes with Swagger, a tool for API documentation and testing. To test the API endpoints:

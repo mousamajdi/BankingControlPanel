@@ -10,6 +10,14 @@ To simplify API testing, we've provided a Postman collection. You can download i
 
 Welcome to the **Banking Control Panel** project! This guide provides instructions to set up the project in your local environment, run the application, and understand its functionality. Please follow the steps carefully to ensure everything works correctly.
 
+**Seed Data**
+1. I added a seed admin user with these credintials
+```
+  Email: "admin@gmail.com",
+  password: "Admin@123",
+  role: "Admin",
+```
+2. I also added a clients for testing
 ## **Prerequisites**
 
 Before you begin, ensure you have the following software installed on your machine:

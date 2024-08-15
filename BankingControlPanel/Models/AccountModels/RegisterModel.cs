@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BankingControlPanel.Enums;
+using Swashbuckle.AspNetCore.Annotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace BankingControlPanel.Models.AccountModels
 {
@@ -13,6 +15,7 @@ namespace BankingControlPanel.Models.AccountModels
         public string Password { get; set; }
 
         [Required]
-        public string Role { get; set; } // Admin or User
+        [SwaggerSchema("User role (e.g., 'Admin', 'User')")]
+        public UserRole Role { get; set; } // Admin or User
     }
 }

@@ -41,9 +41,10 @@ namespace BankingControlPanel.Controllers
             }
 
             // Ensure the role exists before creating the user
-            if (!string.IsNullOrEmpty(model.Role))
+            var roleName = model.Role.ToString();
+            if (!string.IsNullOrEmpty(roleName))
             {
-                var roleExists = await _roleManager.RoleExistsAsync(model.Role);
+                var roleExists = await _roleManager.RoleExistsAsync(roleName);
                 if (!roleExists)
                 {
                     return BadRequest($"Role '{model.Role}' does not exist.");
@@ -61,18 +62,18 @@ namespace BankingControlPanel.Controllers
             if (result.Succeeded)
             {
                 // Ensure the role exists before assigning it
-                if (!string.IsNullOrEmpty(model.Role))
+                if (!string.IsNullOrEmpty(roleName))
                 {
-                    var roleExists = await _roleManager.RoleExistsAsync(model.Role);
+                    var roleExists = await _roleManager.RoleExistsAsync(roleName);
                     if (!roleExists)
                     {
-                        var roleResult = await _roleManager.CreateAsync(new IdentityRole(model.Role));
+                        var roleResult = await _roleManager.CreateAsync(new IdentityRole(roleName));
                         if (!roleResult.Succeeded)
                         {
                             return BadRequest("Failed to create role");
                         }
                     }
-                    await _userManager.AddToRoleAsync(user, model.Role);
+                    await _userManager.AddToRoleAsync(user, roleName);
                 }
 
                 return Ok(new { message = "User registered successfully" });

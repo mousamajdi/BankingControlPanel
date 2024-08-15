@@ -100,13 +100,3 @@ Open your browser and navigate to https://localhost:{yourPort}/swagger.
 You'll see the API documentation with available endpoints.
 
 You can test the endpoints directly from the Swagger UI.
-
-
-## **Step 6: Postman Collection**
-
-If you prefer to test the API using Postman, you can export the Swagger documentation to a Postman collection:
-
-1. Open Swagger UI at https://localhost:{YourPort}/swagger.
-2. Click on the "Export" button and download the Postman collection file.
-3. Import the collection into Postman.
-

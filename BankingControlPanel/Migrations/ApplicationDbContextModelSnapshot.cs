@@ -123,17 +123,17 @@ namespace BankingControlPanel.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "477a0e13-0f5c-4780-abab-ae70b8713796",
+                            Id = "b6a49e77-b381-4689-b0c1-448674386174",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d0620dc1-c885-4697-b262-75aa96c3a5e1",
+                            ConcurrencyStamp = "cbb8c0be-f0c6-400e-884d-258b32385b77",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAELtGW6ktBwUZwoxIeSye5wRl9vHXlL1itF2el3a2aIv2R2ayXXP4Jvd0GAq1c5JrPA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKa8EZ0yEmydRt5Go06lX3Ig9I48OwYXAkhZxj2vhop5/UU7J2RxnvITGMekkGQm0A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "287a691c-a9f1-4319-9405-61eea3fab7b6",
+                            SecurityStamp = "1452bfea-791a-4bba-92a5-1fab7908e97b",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
                         });
@@ -211,6 +211,37 @@ namespace BankingControlPanel.Migrations
                         });
                 });
 
+            modelBuilder.Entity("BankingControlPanel.Entities.QueryParams", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("Page")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PageSize")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SearchTerm")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SortBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("QueryParams");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -240,13 +271,13 @@ namespace BankingControlPanel.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "867bca98-6dbe-4f3f-b9ee-894ce3bfc6ba",
+                            Id = "94474b85-f95b-4e11-a50c-27cff4c0f4de",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "62ce3bec-b602-403d-b2fe-97dcd500800d",
+                            Id = "727bd23d-9186-48c3-9b40-de9915acdb03",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -337,6 +368,13 @@ namespace BankingControlPanel.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "b6a49e77-b381-4689-b0c1-448674386174",
+                            RoleId = "94474b85-f95b-4e11-a50c-27cff4c0f4de"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

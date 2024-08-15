@@ -3,6 +3,7 @@ using BankingControlPanel.Models.ClientModels;
 using BankingControlPanel.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BankingControlPanel.Controllers
 {
@@ -21,10 +22,15 @@ namespace BankingControlPanel.Controllers
         [HttpGet]
         public async Task<IActionResult> GetClients([FromQuery] ClientQueryParams queryParams)
         {
-            var result = await _clientService.GetAllClientsAsync(queryParams);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var result = await _clientService.GetAllClientsAsync(queryParams, userId);
             return Ok(result);
         }
-
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetClient(int id)
@@ -58,5 +64,20 @@ namespace BankingControlPanel.Controllers
             await _clientService.DeleteClientAsync(id);
             return Ok("Client deleted successfully");
         }
+
+        [HttpGet("last-search-parameters")]
+        public async Task<IActionResult> GetLastSearchParameters()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var lastThreeSearchParams = await _clientService.GetLastSearchParameters(userId);
+
+            return Ok(lastThreeSearchParams);
+        }
+
     }
 }

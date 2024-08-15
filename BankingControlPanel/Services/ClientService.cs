@@ -18,9 +18,9 @@ namespace BankingControlPanel.Services
             _mapper = mapper;
         }
 
-        public async Task<PagedResult<ClientDTO>> GetAllClientsAsync(ClientQueryParams queryParams)
+        public async Task<PagedResult<ClientDTO>> GetAllClientsAsync(ClientQueryParams queryParams, string userId)
         {
-            var result = await _clientRepository.GetAllClientsAsync(queryParams);
+            var result = await _clientRepository.GetAllClientsAsync(queryParams, userId);
             return result;
         }
 
@@ -45,6 +45,12 @@ namespace BankingControlPanel.Services
         public async Task DeleteClientAsync(int id)
         {
             await _clientRepository.DeleteClientAsync(id);
+        }
+
+        public async Task<List<QueryParams>> GetLastSearchParameters(string userId)
+        {
+            var result = await _clientRepository.GetLastSearchParametersAsync(userId);
+            return result;
         }
     }
 }

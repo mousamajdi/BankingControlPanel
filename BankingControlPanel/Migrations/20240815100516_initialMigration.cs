@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace BankingControlPanel.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class initialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -70,6 +72,24 @@ namespace BankingControlPanel.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Clients", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QueryParams",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SearchTerm = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SortBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Page = table.Column<int>(type: "int", nullable: true),
+                    PageSize = table.Column<int>(type: "int", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QueryParams", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -199,6 +219,35 @@ namespace BankingControlPanel.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "727bd23d-9186-48c3-9b40-de9915acdb03", null, "User", "USER" },
+                    { "94474b85-f95b-4e11-a50c-27cff4c0f4de", null, "Admin", "ADMIN" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "b6a49e77-b381-4689-b0c1-448674386174", 0, "cbb8c0be-f0c6-400e-884d-258b32385b77", "admin@gmail.com", true, false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAIAAYagAAAAEKa8EZ0yEmydRt5Go06lX3Ig9I48OwYXAkhZxj2vhop5/UU7J2RxnvITGMekkGQm0A==", null, false, "1452bfea-791a-4bba-92a5-1fab7908e97b", false, "admin@gmail.com" });
+
+            migrationBuilder.InsertData(
+                table: "Clients",
+                columns: new[] { "Id", "City", "Country", "Email", "FirstName", "LastName", "MobileNumber", "PersonalId", "Sex", "Street", "ZipCode" },
+                values: new object[] { 1, "Ramallah", "Palestine", "mousa.majdi@gmail.com", "Mousa", "Mousa", "+970569375987", "401441456", "Male", "123 Main St", "00970" });
+
+            migrationBuilder.InsertData(
+                table: "Accounts",
+                columns: new[] { "Id", "AccountNumber", "Balance", "ClientId" },
+                values: new object[] { 1, "ACC123456789", 1000.00m, 1 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "94474b85-f95b-4e11-a50c-27cff4c0f4de", "b6a49e77-b381-4689-b0c1-448674386174" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Accounts_ClientId",
                 table: "Accounts",
@@ -264,6 +313,9 @@ namespace BankingControlPanel.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "QueryParams");
 
             migrationBuilder.DropTable(
                 name: "Clients");

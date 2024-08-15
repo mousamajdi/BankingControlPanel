@@ -20,8 +20,21 @@ namespace BankingControlPanel.Repositories
             _mapper = mapper;
         }
 
-        public async Task<PagedResult<ClientDTO>> GetAllClientsAsync(ClientQueryParams queryParams)
+        public async Task<PagedResult<ClientDTO>> GetAllClientsAsync(ClientQueryParams queryParams, string userId)
         {
+            // Store the search parameters in the database
+            var dbParams = new QueryParams
+            {
+                UserId = userId,
+                SearchTerm = queryParams.SearchTerm,
+                SortBy = queryParams.SortBy.ToString(),
+                Page = queryParams.Page,
+                PageSize = queryParams.PageSize,
+                CreatedAt = DateTime.UtcNow
+            };
+            _context.QueryParams.Add(dbParams);
+            await _context.SaveChangesAsync();
+
             var clientsQuery = _context.Clients.Include(c => c.Accounts).AsQueryable();
 
             // Apply filtering
@@ -112,6 +125,20 @@ namespace BankingControlPanel.Repositories
                 _context.Clients.Remove(client);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<List<QueryParams>> GetLastSearchParametersAsync(string userId)
+        {
+            var query = _context.QueryParams.AsQueryable();
+            query = query.Where(q => q.UserId == userId);
+
+
+            var lastThreeSearchParams = await query
+                .OrderByDescending(q => q.CreatedAt)
+                .Take(3)
+                .ToListAsync();
+
+            return lastThreeSearchParams;
         }
     }
 }

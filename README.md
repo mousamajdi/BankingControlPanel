@@ -1,5 +1,11 @@
 # **Banking Control Panel - Setup and Running Guide**
 
+## **Postman Collection**
+
+To simplify API testing, we've provided a Postman collection. You can download it and import it into your Postman application.
+
+[Download Postman Collection](./BankingControlPanel.postman_collection.json)
+
 ## **Introduction**
 
 Welcome to the **Banking Control Panel** project! This guide provides instructions to set up the project in your local environment, run the application, and understand its functionality. Please follow the steps carefully to ensure everything works correctly.

@@ -19,6 +19,12 @@ namespace BankingControlPanel.Controllers
             _clientService = clientService;
         }
 
+
+        /// <summary>
+        /// Retrieves a paginated list of clients based on query parameters.
+        /// </summary>
+        /// <param name="queryParams">The filtering, sorting, and paging parameters.</param>
+        /// <returns>An HTTP response with the paginated result of clients.</returns>
         [HttpGet]
         public async Task<IActionResult> GetClients([FromQuery] ClientQueryParams queryParams)
         {
@@ -32,6 +38,12 @@ namespace BankingControlPanel.Controllers
             return Ok(result);
         }
 
+
+        /// <summary>
+        /// Retrieves a client by their ID.
+        /// </summary>
+        /// <param name="id">The ID of the client.</param>
+        /// <returns>An HTTP response with the client data.</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetClient(int id)
         {
@@ -43,6 +55,12 @@ namespace BankingControlPanel.Controllers
             return Ok(client);
         }
 
+
+        /// <summary>
+        /// Adds a new client to the system.
+        /// </summary>
+        /// <param name="clientDTO">The client data transfer object.</param>
+        /// <returns>An HTTP response indicating the result of the operation.</returns>
         [HttpPost]
         public async Task<IActionResult> AddClient([FromBody] ClientDTO clientDTO)
         {
@@ -50,6 +68,13 @@ namespace BankingControlPanel.Controllers
             return CreatedAtAction(nameof(GetClient), new { id = clientDTO.Id }, clientDTO);
         }
 
+
+        /// <summary>
+        /// Updates an existing client's information.
+        /// </summary>
+        /// <param name="id">The ID of the client to update.</param>
+        /// <param name="clientDTO">The client data transfer object.</param>
+        /// <returns>An HTTP response indicating the result of the operation.</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateClient(int id, [FromBody] ClientDTO clientDTO)
         {
@@ -58,6 +83,12 @@ namespace BankingControlPanel.Controllers
             return Ok("Client record updated successfully");
         }
 
+
+        /// <summary>
+        /// Deletes a client by their ID.
+        /// </summary>
+        /// <param name="id">The ID of the client to delete.</param>
+        /// <returns>An HTTP response indicating the result of the operation.</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteClient(int id)
         {
@@ -65,6 +96,11 @@ namespace BankingControlPanel.Controllers
             return Ok("Client deleted successfully");
         }
 
+
+        /// <summary>
+        /// Retrieves the last three search parameters used by the current user.
+        /// </summary>
+        /// <returns>An HTTP response with the last three search parameters.</returns>
         [HttpGet("last-search-parameters")]
         public async Task<IActionResult> GetLastSearchParameters()
         {
